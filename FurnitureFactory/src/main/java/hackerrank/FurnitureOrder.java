@@ -1,19 +1,22 @@
 package hackerrank;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class FurnitureOrder implements FurnitureOrderInterface {
     /**
      * TODO: Create a map of Furniture items to order quantities
      */
-    private Map<Furniture, Integer> order;
+    private HashMap<Furniture, Integer> order;
 
     /**
      * Initialize a new mapping of Furniture types to order quantities.
      */
     FurnitureOrder() {
-        // TODO: Complete the constructor
         order = new HashMap<Furniture, Integer>();
     }
 
@@ -24,16 +27,14 @@ public class FurnitureOrder implements FurnitureOrderInterface {
 
 
     public HashMap<Furniture, Integer> getOrderedFurniture() {
-        // TODO: Complete the method
-        return null;
+        return order;
     }
 
     public float getTotalOrderCost() {
-        // TODO: Complete the method
-        float totalCost;
-        order.forEach((k, val) -> {
-            totalCost =  k.cost() * val;
-        });
+        float totalCost = 0.0f;
+        for(Map.Entry<Furniture, Integer> entry : order.entrySet()){
+            totalCost+= entry.getKey().cost() * entry.getValue();
+        }
         return totalCost;
     }
 
@@ -50,7 +51,10 @@ public class FurnitureOrder implements FurnitureOrderInterface {
     }
 
     public int getTotalOrderQuantity() {
-        // TODO: Complete the method
-        return -1;
+        final AtomicInteger totalQuantity = new AtomicInteger();
+        if(!order.isEmpty()){
+            order.forEach((k,v) -> totalQuantity.addAndGet(v));
+        }
+        return totalQuantity.get();
     }
 }
